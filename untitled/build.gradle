@@ -10,11 +10,19 @@ dependencies {
 
 }
 
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java']
+            }
+    }
+}
+
 jar {
     archiveBaseName = 'MazeRunner'
     manifest {
-        attributes "Main-Class" : "MazeRunner"
-    }
+        attributes "Main-Class" : "maze.MazeRunner"
+        }
     from {
         configurations.runtimeClasspath.collect{it.isDirectory() ? it : zipTree(it)}
     }

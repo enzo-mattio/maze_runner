@@ -28,12 +28,12 @@ public class Maze {
         MazeGenerator generator = switch (generationType.toLowerCase()) {
 
             case "perfect" -> switch (generatorMethod.toLowerCase()) {
-                case "simple" -> new SimplePerfectMazeGenerator(width, height, maze);
+                case "simple" -> new SimplePerfectMazeGenerator(maze, width, height);
                 case "graph" -> new GraphPerfectMazeGenerator(width, height, maze);
                 default -> throw new IllegalStateException("Unexpected value: " + generatorMethod.toLowerCase());
             };
             case "imperfect" -> switch (generatorMethod.toLowerCase()) {
-                case "simple" -> new SimpleImperfectMazeGenerator(width, height, maze);
+                case "simple" -> new SimpleImperfectMazeGenerator(maze, width, height);
                 case "graph" -> new GraphImperfectMazeGenerator(width, height, maze);
                 default -> throw new MazeGenerationException("Méthode de génération invalide.");
             };
@@ -42,37 +42,33 @@ public class Maze {
         };
     }
     public void initMaze() {
-        // Initialisation avec l'entrée et la sortie
-        int id = 0;
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
-                maze[id] = new Cell(x, y);
-                id++;
-            }
+        for (int id = 0; id < maze.length; id++) {
+            maze[id] = new Cell(id);
         }
 
     }
 
 
     public void printMaze(){
-        // Affichage du labyrinthe
-        maze[0].removeWall(0);
-        maze[maze.length - 1].removeWall(2);
-        int delta = 0;
+        maze[0].removeWall(0); // Entry
+        maze[maze.length - 1].removeWall(2); // Exit
+
+        int id = 0;
         for (int y = 0; y < height; y++) {
-            StringBuilder str1 = new StringBuilder();
-            StringBuilder str2 = new StringBuilder();
-            StringBuilder str3 = new StringBuilder();
+            StringBuilder row1 = new StringBuilder();
+            StringBuilder row2 = new StringBuilder();
+            StringBuilder row3 = new StringBuilder();
             for (int x = 0; x < width; x++) {
-                String[] strs = maze[x + delta].getBody();
-                str1.append(strs[0]);
-                str2.append(strs[1]);
-                str3.append(strs[2]);
+                String[] strCell = maze[x + id].getBody();
+                row1.append(strCell[0]);
+                row2.append(strCell[1]);
+                row3.append(strCell[2]);
             }
-            delta += width;
-            System.out.println(str1 + "\n" + str2 + "\n" + str3);
+            id += width; // next row
+            System.out.println(row1 + "\n" + row2 + "\n" + row3);
         }
     }
 }
+
 
 

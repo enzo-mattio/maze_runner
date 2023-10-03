@@ -8,11 +8,8 @@ import maze.Cell;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 public class GraphImperfectMazeGenerator implements MazeGenerator {
-    private final Random random = new Random();
-
     public GraphImperfectMazeGenerator(int width, int height, Cell[] maze) {
         generate(maze, width, height);
     }

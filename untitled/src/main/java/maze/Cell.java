@@ -4,50 +4,32 @@ public class Cell {
 
     // maze.Cell properties
     //  maze.Cell id
-    public int y;
-    // width = 3;
-    // height = 3;
-    public int x;
+    public int id;
 
     private final boolean[] wall = {true, true, true, true}; // Top, Right, Bottom, Left
-
-    // Directions
-    int isouth = 7;
-    int ieast = 5;
-    int inorth = 1;
-    int iwest = 3;
-
 
 
     // maze.Cell visited
     boolean visited = false;
 
     // maze.Cell constructor
-    public Cell(int x, int y) {
-        this.x = x;
-        this.y = y;
+    public Cell(int id) {
+        this.id = id;
     }
 
     // maze.Cell methods
+
+    public String[] getBody() {
+        return new String[]{"#" + (wall[0] ? "#" : ".") + "#", (wall[3] ? "#" : ".") + "." + (wall[1] ? "#" : "."), "#" + (wall[2] ? "#" : ".") + "#"};
+
+    }
     public void setVisited() {
         visited = true;
     }
 
     public boolean isVisited() {
-        return !visited;
+        return visited;
     }
-    public String[] getBody() {
-        String top = wall[0] ? "#" : ".";
-        String right = wall[1] ? "#" : ".";
-        String bot = wall[2] ? "#" : ".";
-        String left = wall[3] ? "#" : ".";
-        String[] cell = new String[3];
-        cell[0] = "#" + top + "#";
-        cell[1] = left + "." + right;
-        cell[2] = "#" + bot + "#";
-        return cell;
-    }
-
     public void removeWall(int direction) {
         wall[direction] = false;
     }
